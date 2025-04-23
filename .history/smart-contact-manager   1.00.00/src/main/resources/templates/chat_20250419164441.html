@@ -1,0 +1,22 @@
+<div class="p-4">
+    <input id="msg" type="text" placeholder="Type message" class="border p-2 rounded w-full">
+    <button onclick="sendMessage()" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">Send</button>
+    <div class="mt-4 bg-gray-100 p-4 rounded" id="bot-response"></div>
+</div>
+
+<script>
+function sendMessage() {
+    const msg = document.getElementById("msg").value;
+    fetch("/chat", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `message=${encodeURIComponent(msg)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("bot-response").innerText = data.response;
+    });
+}
+</script>
